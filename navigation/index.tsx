@@ -17,7 +17,7 @@ import ModalScreen from '../screens/ModalScreen';
 import MyChordsScreen from '../screens/MyChordsScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
-import AddChordsScreen from '../screens/TabTwoScreen';
+import AddChordsScreen from '../screens/AddChordsScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
