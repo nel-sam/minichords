@@ -9,15 +9,15 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
-import MyChordsScreen from '../screens/MyChordsScreen';
+import MySongsScreen from '../screens/MySongsScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
-import AddChordsScreen from '../screens/AddChordsScreen';
+import AddSongsScreen from '../screens/AddSongsScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -75,17 +75,17 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabTwo"
-        component={AddChordsScreen}
+        component={AddSongsScreen}
         options={{
-          title: t('add-chords'),
+          title: t('add-songs'),
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="TabThree"
-        component={MyChordsScreen}
+        component={MySongsScreen}
         options={{
-          title: t('my-chords'),
+          title: t('my-songs'),
           tabBarIcon: ({ color }) => <TabBarIcon name="music" color={color} />,
         }}
       />

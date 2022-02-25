@@ -3,33 +3,23 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
+import { GlobalStyles } from './shared/global-styles';
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   const { t } = useTranslation();
 
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyles.container}>
       <View>
         <Text style={styles.title}>{t('home')}</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });
