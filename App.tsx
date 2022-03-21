@@ -13,19 +13,17 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
-  i18next
-    .use(initReactI18next)
-    .init({
-      interpolation: {
-        escapeValue: false
-      },
-      lng: 'es',
-      fallbackLng: 'en',
-      resources: {
-        en: { translation: en },
-        es: { translation: es }
-      }
-    });
+  i18next.use(initReactI18next).init({
+    interpolation: {
+      escapeValue: false,
+    },
+    lng: 'es',
+    fallbackLng: 'en',
+    resources: {
+      en: { translation: en },
+      es: { translation: es },
+    },
+  });
 
   if (!isLoadingComplete) {
     return null;

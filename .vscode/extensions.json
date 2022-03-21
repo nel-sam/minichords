@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "burkeholland.simple-react-snippets",
+    "eamodio.gitlens",
+    "streetsidesoftware.code-spell-checker",
+    "dsznajder.es7-react-js-snippets",
+    "msjsdiag.vscode-react-native",
+    "planbcoding.vscode-react-refactor",
+    "dbaeumer.vscode-eslint",
+    "formulahendry.auto-rename-tag"
+  ]
+}
