@@ -7,6 +7,7 @@
     "msjsdiag.vscode-react-native",
     "planbcoding.vscode-react-refactor",
     "dbaeumer.vscode-eslint",
-    "formulahendry.auto-rename-tag"
+    "formulahendry.auto-rename-tag",
+    "esbenp.prettier-vscode"
   ]
 }
