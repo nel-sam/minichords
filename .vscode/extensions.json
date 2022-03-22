@@ -8,6 +8,8 @@
     "planbcoding.vscode-react-refactor",
     "dbaeumer.vscode-eslint",
     "formulahendry.auto-rename-tag",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "streetsidesoftware.code-spell-checker-spanish",
+    "streetsidesoftware.code-spell-checker-french"
   ]
 }
