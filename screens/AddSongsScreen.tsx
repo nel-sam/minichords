@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-import { GlobalStyles } from './shared/global-styles';
-import { Separator } from './shared/separator';
+import { GlobalStyles } from './shared/GlobalStyles';
+import { McSeparator } from '../components/McSeparator/McSeparator';
 
 export default function AddSongsScreen() {
   const { t } = useTranslation();
@@ -11,7 +11,7 @@ export default function AddSongsScreen() {
   return (
     <View style={GlobalStyles.container}>
       <Text style={styles.title}>{t('add-songs')}</Text>
-      <Separator></Separator>
+      <McSeparator></McSeparator>
     </View>
   );
 }

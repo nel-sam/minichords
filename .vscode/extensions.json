@@ -10,6 +10,8 @@
     "formulahendry.auto-rename-tag",
     "esbenp.prettier-vscode",
     "streetsidesoftware.code-spell-checker-spanish",
-    "streetsidesoftware.code-spell-checker-french"
+    "streetsidesoftware.code-spell-checker-french",
+    "hbenl.vscode-test-explorer",
+    "kavod-io.vscode-jest-test-adapter"
   ]
 }
