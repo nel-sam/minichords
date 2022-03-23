@@ -1,9 +1,9 @@
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
-
+import { McSeparator } from '../components/McSeparator/McSeparator';
 import { Text, View } from '../components/Themed';
 import { GlobalStyles } from './shared/GlobalStyles';
-import { McSeparator } from '../components/McSeparator/McSeparator';
 
 export default function AddSongsScreen() {
   const { t } = useTranslation();
@@ -20,5 +20,5 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  }
+  },
 });

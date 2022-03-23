@@ -7,8 +7,8 @@ import { Song } from '../../models/chords';
 import { Constants } from '../../screens/shared/Constants';
 import { McSeparator } from '../McSeparator/McSeparator';
 
-interface McFlatListProps {
-  data: any[];
+interface McSongListProps {
+  data: Song[];
 }
 
 interface ListItemProps {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 });
 
 const ListItem = ({ item, index }: ListItemProps) => (
-  <View>
+  <View testID={`${item.artist}-${item.name}`}>
     <View style={styles.listItem}>
       <View style={styles.listItemIndex}>
         <Text style={styles.listItemIndexText}>{index}</Text>
@@ -68,12 +68,13 @@ const ListItem = ({ item, index }: ListItemProps) => (
   </View>
 );
 
-export default function McFlatList({ data }: McFlatListProps) {
+export default function McSongList({ data }: McSongListProps): JSX.Element {
   return (
     <FlatList
+      testID='mcsonglist'
       style={styles.flatList}
       data={data}
-      keyExtractor={(item: any) => item.id}
+      keyExtractor={(item: any | Song) => item.id}
       renderItem={({ item, index }) => <ListItem item={item} index={index} />}
     ></FlatList>
   );

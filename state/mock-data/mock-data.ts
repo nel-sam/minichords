@@ -1,8 +1,7 @@
-import { Song, SongSection } from '../models/chords';
-import { Chords, SongSections } from '../models/enums';
+import { Song, SongSection } from '../../models/chords';
+import { Chords, SongSections } from '../../models/enums';
 
-// TODO: Get this from DB or local storage
-export const data_Songs: Song[] = [
+export const mock_Songs: Song[] = [
   {
     id: 1,
     name: 'Polly',

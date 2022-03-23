@@ -1,7 +1,7 @@
 import React from 'react';
-import McFlatList from '../components/McFlatList/McFlatList';
+import McSongList from '../components/McSongList/McSongList';
 import { View } from '../components/Themed';
-import { data_Songs } from '../state/data';
+import { mock_Songs } from '../state/mock-data/mock-data';
 import { RootTabScreenProps } from '../types';
 import { GlobalStyles } from './shared/GlobalStyles';
 
@@ -10,7 +10,7 @@ export default function MySongsScreen({
 }: RootTabScreenProps<'TabThree'>) {
   return (
     <View style={GlobalStyles.container}>
-      <McFlatList data={data_Songs}></McFlatList>
+      <McSongList data={mock_Songs}></McSongList>
     </View>
   );
 }

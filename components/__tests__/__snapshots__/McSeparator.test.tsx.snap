@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`McSeparator component matches snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#fff",
+      },
+      Object {
+        "width": "100%",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#eee",
+        },
+        Object {
+          "height": 1,
+          "marginLeft": "10%",
+          "marginVertical": 2,
+          "width": "80%",
+        },
+      ]
+    }
+    testID="mcseparator"
+  />
+</View>
+`;
