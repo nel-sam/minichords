@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import i18next from 'i18next';
+import React from 'react';
 import { initReactI18next } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 

@@ -1,20 +1,15 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { View } from '../Themed';
+import { StyleSheet, View } from 'react-native';
 
 export const McSeparator = () => {
   return (
     <View style={styles.outer}>
-      <View
-        testID='mcseparator'
-        style={styles.separator}
-        lightColor='#eee'
-        darkColor='rgba(255,255,255,0.1)'
-      />
+      <View testID='mcseparator' style={styles.separator} />
     </View>
   );
 };
 
+// TODO: Account for dark/light
 const styles = StyleSheet.create({
   outer: {
     width: '100%',

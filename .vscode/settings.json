@@ -9,5 +9,12 @@
   },
   "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "cSpell.words": ["mcseparator", "testid"]
+  "cSpell.words": [
+    "fontawesome",
+    "fortawesome",
+    "mcseparator",
+    "mcsonglist",
+    "testid"
+  ],
+  "cSpell.language": "en,hr,es-ES"
 }
