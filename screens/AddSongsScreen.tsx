@@ -7,6 +7,7 @@ import { McSeparator } from '../components/McSeparator/McSeparator';
 export default function AddSongsScreen() {
   const { t } = useTranslation();
   const [songNameInput, setSongNameInput] = useState('');
+  const [artistName, setArtistName] = useState('');
 
   return (
     <McColumn
@@ -17,6 +18,13 @@ export default function AddSongsScreen() {
             style={styles.input}
             onChangeText={(val) => setSongNameInput(val)}
             value={songNameInput}
+            placeholder={t('song-name')}
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={(val) => setArtistName(val)}
+            value={artistName}
+            placeholder={t('artist-name')}
           />
         </>
       }

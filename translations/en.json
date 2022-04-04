@@ -2,5 +2,7 @@
   "home": "Home",
   "add-song": "Add",
   "my-songs": "My Songs",
+  "song-name": "Song name",
+  "artist-name": "Writer's name",
   "home-greeting": "Chord summaries to help your memory on songs you already know"
 }

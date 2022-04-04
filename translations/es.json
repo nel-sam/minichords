@@ -2,5 +2,7 @@
   "home": "Inicio",
   "add-songs": "Agregar",
   "my-songs": "Mis Canciones",
+  "song-name": "Nombre de la canción",
+  "artist-name": "Nombre del escritor",
   "home-greeting": "Acordes mostrados en una página simple para ayudarte recordar canciones que ha has aprendido una vez"
 }
