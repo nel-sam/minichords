@@ -7,12 +7,11 @@ import { Text, View } from '../components/Themed';
 import { Song, SongSection } from '../models/chords';
 import { Chords, SongSections } from '../models/enums';
 import { data_Songs } from '../state/data';
-import { RootTabScreenProps } from '../types';
 import { Constants } from './shared/constants';
 import { GlobalStyles } from './shared/global-styles';
 import { Separator } from './shared/separator';
 
-export default function MySongsScreen({ navigation }: RootTabScreenProps<'TabThree'>) {
+export default function MySongsScreen() {
 
   const styles = StyleSheet.create({
     listItem: {
