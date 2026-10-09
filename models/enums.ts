@@ -8,14 +8,3 @@ export enum SongSections {
   Interlude,
   PreChorus
 }
-
-export enum Chords {
-  Em,
-  G,
-  D,
-  C,
-  B,
-  Bb,
-  E,
-  Cm
-}

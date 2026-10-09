@@ -1,5 +1,5 @@
-import { Song, SongSection } from '../models/chords';
-import { Chords, SongSections } from '../models/enums';
+import { Song } from '../models/chords';
+import { SongSections } from '../models/enums';
 
 // TODO: Get this from DB or local storage
 export const data_Songs: Song[] = [
@@ -14,19 +14,29 @@ export const data_Songs: Song[] = [
           SongSections.Intro,
           SongSections.Instrumental,
         ],
-        notes: 'Mild distortion',
-        chords: [Chords.Em, Chords.G, Chords.D, Chords.C],
-      } as SongSection,
+        notesKey: 'seed-note-polly-distortion',
+        chords: [
+          { root: 'E', quality: 'min' },
+          { root: 'G' },
+          { root: 'D' },
+          { root: 'C' },
+        ],
+      },
       {
         label: [SongSections.Chorus],
-        chords: [Chords.D, Chords.C, Chords.G, Chords.Bb],
-      } as SongSection,
+        chords: [
+          { root: 'D' },
+          { root: 'C' },
+          { root: 'G' },
+          { root: 'B', accidental: '♭' },
+        ],
+      },
       {
         label: [SongSections.Outro],
-        chords: [Chords.E],
-      } as SongSection
+        chords: [{ root: 'E' }],
+      },
     ]
-  } as Song,
+  },
   {
     id: 2,
     name: 'Creep',
@@ -37,13 +47,18 @@ export const data_Songs: Song[] = [
           SongSections.Verse,
           SongSections.Intro,
         ],
-        chords: [Chords.G, Chords.B, Chords.C, Chords.Cm],
-      } as SongSection,
+        chords: [
+          { root: 'G' },
+          { root: 'B' },
+          { root: 'C' },
+          { root: 'C', quality: 'min' },
+        ],
+      },
       {
         label: [SongSections.PreChorus, SongSections.Outro],
-        notes: 'x3, very short',
-        chords: [Chords.G],
-      } as SongSection,
+        notesKey: 'seed-note-creep-repeat',
+        chords: [{ root: 'G' }],
+      },
     ]
-  } as Song,
+  },
 ];
