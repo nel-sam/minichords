@@ -27,7 +27,6 @@ export interface Song {
 export interface SongSection {
   label: SongSections[];
   notes?: string,
-  notesKey?: string,
   chords: Chord[]
 }
 

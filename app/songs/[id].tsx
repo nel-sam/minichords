@@ -1,11 +1,13 @@
-import { Stack, useLocalSearchParams } from 'expo-router';
-import { ScrollView, StyleSheet } from 'react-native';
+import { Stack, router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useCallback, useState } from 'react';
+import { Button, ScrollView, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Text, View } from '../../components/Themed';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import { formatChord } from '../../models/chords';
 import { SongSections } from '../../models/enums';
+import { Song } from '../../models/chords';
 import { data_Songs } from '../../state/data';
 
 const styles = StyleSheet.create({
@@ -105,7 +107,15 @@ export default function SongDetailsScreen() {
   const { t } = useTranslation();
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
-  const song = data_Songs.find((song) => song.id === Number(id));
+  const [song, setSong] = useState<Song | undefined>(() =>
+    data_Songs.find((item) => item.id === Number(id)),
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      setSong(data_Songs.find((item) => item.id === Number(id)));
+    }, [id]),
+  );
 
   if (!song) {
     return (
@@ -127,6 +137,14 @@ export default function SongDetailsScreen() {
             {song.sections.length} {song.sections.length === 1 ? t('section') : t('sections')}
           </Text>
         </View>
+
+        <Button
+          title={t('edit-song')}
+          onPress={() =>
+            router.push({ pathname: '/add-songs', params: { id: String(song.id) } })
+          }
+          color={colors.accent}
+        />
 
         {song.notes ? (
           <View
@@ -167,7 +185,7 @@ export default function SongDetailsScreen() {
               {section.chords.map((chord, chordIndex) => (
                 <View
                   key={`${id}-${index}-${chordIndex}`}
-                  style={[styles.chordTile, { backgroundColor: colors.chordSurface }]}>
+                  style={[styles.chordTile]}>
                   <Text style={[styles.chordText, { color: colors.text }]}>
                     {formatChord(chord)}
                   </Text>
@@ -175,7 +193,7 @@ export default function SongDetailsScreen() {
               ))}
             </View>
 
-            {section.notes || section.notesKey ? (
+            {section.notes ? (
               <View
                 style={[
                   styles.note,
@@ -185,7 +203,7 @@ export default function SongDetailsScreen() {
                   },
                 ]}>
                 <Text style={[styles.noteText, { color: colors.text }]}>
-                  {section.notesKey ? t(section.notesKey) : section.notes}
+                  {section.notes}
                 </Text>
               </View>
             ) : null}

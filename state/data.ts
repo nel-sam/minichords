@@ -14,7 +14,6 @@ export const data_Songs: Song[] = [
           SongSections.Intro,
           SongSections.Instrumental,
         ],
-        notesKey: 'seed-note-polly-distortion',
         chords: [
           { root: 'E', quality: 'min' },
           { root: 'G' },
@@ -56,7 +55,6 @@ export const data_Songs: Song[] = [
       },
       {
         label: [SongSections.PreChorus, SongSections.Outro],
-        notesKey: 'seed-note-creep-repeat',
         chords: [{ root: 'G' }],
       },
     ]

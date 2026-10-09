@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { router } from 'expo-router';
-import { useRef, useState } from 'react';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
 	Button,
@@ -14,9 +14,9 @@ import {
 	TextInput,
 } from 'react-native';
 
-import { Text, View } from '../../components/Themed';
-import Colors from '../../constants/Colors';
-import useColorScheme from '../../hooks/useColorScheme';
+import { Text, View } from '../components/Themed';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 import {
 	Chord,
 	ChordAccidental,
@@ -25,13 +25,13 @@ import {
 	ChordRoot,
 	formatChord,
 	Song,
-} from '../../models/chords';
-import { SongSections } from '../../models/enums';
-import { data_Songs } from '../../state/data';
+} from '../models/chords';
+import { SongSections } from '../models/enums';
+import { data_Songs } from '../state/data';
 
 interface SectionDraft {
 	key: number;
-	label: SongSections;
+	label: SongSections[];
 	chords: Chord[];
 	notes: string;
 }
@@ -70,6 +70,9 @@ function emptyChordDraft(): ChordDraft {
 
 export default function AddSongsScreen() {
 	const { t } = useTranslation();
+	const { id: editIdParam } = useLocalSearchParams<{ id?: string }>();
+	const editId = editIdParam ? Number(editIdParam) : undefined;
+	const editingSong = editId === undefined ? undefined : data_Songs.find((song) => song.id === editId);
 	const colorScheme = useColorScheme();
 	const colors = Colors[colorScheme];
 	const [name, setName] = useState('');
@@ -77,7 +80,7 @@ export default function AddSongsScreen() {
 	const [notes, setNotes] = useState('');
 	const nextSectionKey = useRef(2);
 	const [sections, setSections] = useState<SectionDraft[]>([
-		{ key: 1, label: SongSections.Verse, chords: [], notes: '' },
+		{ key: 1, label: [SongSections.Verse], chords: [], notes: '' },
 	]);
 	const [chordEditorTarget, setChordEditorTarget] = useState<ChordEditorTarget | null>(null);
 	const [chordDraft, setChordDraft] = useState<ChordDraft>(emptyChordDraft());
@@ -85,7 +88,29 @@ export default function AddSongsScreen() {
 		name.trim().length > 0 &&
 		artist.trim().length > 0 &&
 		sections.length > 0 &&
-		sections.every((section) => section.chords.length > 0);
+		sections.every((section) => section.label.length > 0 && section.chords.length > 0);
+
+	useFocusEffect(
+		useCallback(() => {
+			const song = editId === undefined ? undefined : data_Songs.find((item) => item.id === editId);
+			setName(song?.name ?? '');
+			setArtist(song?.artist ?? '');
+			setNotes(song?.notes ?? '');
+			setSections(
+				song
+					? song.sections.map((section, index) => ({
+							key: index + 1,
+							label: [...section.label],
+							chords: section.chords.map((chord) => ({ ...chord })),
+							notes: section.notes ?? '',
+						}))
+					: [{ key: 1, label: [SongSections.Verse], chords: [], notes: '' }],
+			);
+			nextSectionKey.current = (song?.sections.length ?? 1) + 1;
+			setChordEditorTarget(null);
+			setChordDraft(emptyChordDraft());
+		}, [editId]),
+	);
 
 	function updateSection(key: number, update: (section: SectionDraft) => SectionDraft) {
 		setSections((current) => current.map((section) => (section.key === key ? update(section) : section)));
@@ -95,8 +120,21 @@ export default function AddSongsScreen() {
 		const key = nextSectionKey.current++;
 		setSections((current) => [
 			...current,
-			{ key, label: SongSections.Verse, chords: [], notes: '' },
+			{ key, label: [SongSections.Verse], chords: [], notes: '' },
 		]);
+	}
+
+	function toggleSectionType(sectionKey: number, type: SongSections) {
+		updateSection(sectionKey, (section) => {
+			const labels = section.label.includes(type)
+				? section.label.filter((label) => label !== type)
+				: [...section.label, type];
+
+			return {
+				...section,
+				label: sectionTypes.filter((label) => labels.includes(label)),
+			};
+		});
 	}
 
 	function openChordEditor(sectionKey: number, chordIndex?: number) {
@@ -169,25 +207,51 @@ export default function AddSongsScreen() {
 		}));
 	}
 
-	function addSong() {
+	function saveSong() {
 		if (!canSave) {
 			return;
 		}
+		const existingIndex = editingSong
+			? data_Songs.findIndex((song) => song.id === editingSong.id)
+			: -1;
 
 		const song: Song = {
-			id: data_Songs.reduce((highestId, item) => Math.max(highestId, item.id), 0) + 1,
+			id:
+				existingIndex >= 0
+					? data_Songs[existingIndex].id
+					: data_Songs.reduce((highestId, item) => Math.max(highestId, item.id), 0) + 1,
 			name: name.trim(),
 			artist: artist.trim(),
 			notes: notes.trim() || undefined,
 			sections: sections.map((section) => ({
-				label: [section.label],
+				label: [...section.label],
 				chords: [...section.chords],
 				notes: section.notes.trim() || undefined,
 			})),
 		};
 
+		if (existingIndex >= 0) {
+			data_Songs[existingIndex] = song;
+			router.setParams({ id: undefined });
+			router.back();
+			return;
+		}
+
 		data_Songs.push(song);
-		router.navigate('/my-songs');
+		router.replace('/');
+	}
+
+	function cancelEdit() {
+		if (!editingSong) {
+			return;
+		}
+
+		router.setParams({ id: undefined });
+		if (router.canGoBack()) {
+			router.back();
+		} else {
+			router.replace({ pathname: '/songs/[id]', params: { id: String(editingSong.id) } });
+		}
 	}
 
 	return (
@@ -199,7 +263,9 @@ export default function AddSongsScreen() {
 					contentContainerStyle={styles.content}
 					keyboardShouldPersistTaps="handled"
 					showsVerticalScrollIndicator={false}>
-					<Text style={[styles.heading, { color: colors.text }]}>{t('add-song-title')}</Text>
+					<Text style={[styles.heading, { color: colors.text }]}>
+						{editingSong ? t('edit-song-title') : t('add-song-title')}
+					</Text>
 
 					<View style={styles.form}>
 						<FormField label={t('song-title')} colors={colors}>
@@ -257,7 +323,7 @@ export default function AddSongsScreen() {
 										{String(index + 1).padStart(2, '0')}
 									</Text>
 									<Text style={[styles.sectionTitle, { color: colors.text }]}>
-										{t(sectionTranslationKey(section.label))}
+										{section.label.map((label) => t(sectionTranslationKey(label))).join(' / ')}
 									</Text>
 								</View>
 								<Pressable
@@ -272,7 +338,7 @@ export default function AddSongsScreen() {
 							<Text style={[styles.label, { color: colors.muted }]}>{t('section-type')}</Text>
 							<View style={styles.choiceRow}>
 								{sectionTypes.map((type) => {
-									const selected = type === section.label;
+									const selected = section.label.includes(type);
 
 									return (
 										<Pressable
@@ -280,7 +346,7 @@ export default function AddSongsScreen() {
 											accessibilityRole="button"
 											accessibilityState={{ selected }}
 											onPress={() =>
-												updateSection(section.key, (item) => ({ ...item, label: type }))
+												toggleSectionType(section.key, type)
 											}
 											style={[
 												styles.choice,
@@ -352,9 +418,12 @@ export default function AddSongsScreen() {
 					))}
 
 					<Button title={t('add-section')} onPress={addSection} color={colors.accent} />
+					{editingSong ? (
+						<Button title={t('cancel')} onPress={cancelEdit} color={colors.muted} />
+					) : null}
 					<Button
-						title={t('save-song')}
-						onPress={addSong}
+						title={editingSong ? t('save-changes') : t('save-song')}
+						onPress={saveSong}
 						disabled={!canSave}
 						color={colors.accent}
 					/>
