@@ -4,3 +4,10 @@ This app solves the problem of me need a catalog of summaries of the chord progr
 
 <img src="https://github.com/nel-sam/minichords/blob/main/marketing-assets/song-details.png" width="400px">
 <img src="https://github.com/nel-sam/minichords/blob/main/marketing-assets/edit-song.png" width="400px">
+
+
+## License notes
+
+This repository is publicly visible for reference and demonstration purposes.
+No license is granted for use, copying, modification, or distribution of the source code.
+All rights reserved.
